@@ -1,0 +1,25 @@
+header {
+    line-height: 3em;
+    background-color: #cbcbcb;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MTJweCIgaGVpZ2h0PSI3OTJweCI+PHBhdGggZmlsbD0iI0Y2OEEyMSIgZD0iTTU3NC44MjcsOTQuNjg4YzEuMTgsMTEuMzgxLTM5LjU3NCwzOC41ODktNTAuMTMyLDQ3LjQ1MWMtMTAzLjg5MSw4Ni45NTktMTgzLjYwMSwyMDMuMzc5LTIyNC4xNDgsMzQ5LjcwNGMtNy4xOTUsMjYuMTEyLTguMTA5LDY1LjcwOS0xNy43MjMsNzcuMDYxYy01LjUxNSw2LjU4LTM1LjI3LDYuODc2LTQ0LjE3NS01Ljg5OGMtMTAuNjc1LTE1LjM4Mi0xMi4xNDktODUuODAzLTE0Ljc0NS0xMDkuNjYyYy00LjMzNS0zOS4wMzQtNi4xOTMtNzUuODc1LTE0Ljc0NS0xMDYuNjk5Yy05LjQ2NiwyMS44NzQtMTEuNzM3LDQzLjE4NC0xNy43MjMsNjguMTY4Yy01LjQ1NiwyMi42NDQtOC42OTksNzkuMjU0LTMyLjQ2OCw4Mi45ODhjLTAuODI2LDAuMTQ3LTI2LjgzNS04LjQ0Ny0zMi4zNzktMTQuODVjLTEyLjUwNC0xNC4zNDUtMTMuMDM1LTUzLjkxMi0xNy43NTMtNzkuOTk0Yy0xMC4yMDMtNTcuMjMxLTE0Ljk4LTk4LjIyMi0yMy41OTEtMTY4LjkzOWMtMy40NzktMjguODk3LTE3LjQ1OC02OS44NTgtNS44OTgtNzcuMDZjNS4zNjctMy4zNDksMzQuNTkxLDcuNDk5LDM4LjM2NiwxMS44MjZjMTYuMzM3LDE5LjAyOCwxNC44MzMsNzUuMzcxLDE3LjcyMywxMDAuNzcxYzQuNTEyLDM5Ljk1Myw3LjA0OCw3My42NTEsMTEuNzY2LDEwMy43MzRjMjMuOTc1LTI5LjI1MywxMy42NTQtMTA2LjQ2MSw1My4wODEtMTEyLjU5N2MxMS44MjUtMS44NjcsMzUuMjQsMTIuMTUyLDQxLjI4NSwyMC43MTdjMjIuMjM1LDMxLjY4NCwxMy43MTIsMTA1LjAzOSwyNi41NDEsMTQ1LjI1OEMzMjkuNzQxLDI5NS4yNTEsNDEwLjYzMSwxNDguMTg1LDUzNi40OTEsNzMuOTRDNTQyLjk0OSw3MC4xNDYsNTczLjg4NCw4Ni4wNjIsNTc0LjgyNyw5NC42ODh6Ii8+PC9zdmc+);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 3em;
+    overflow: hidden;
+}
+
+header h1 {
+    margin: 0.2em 2em;
+}
+
+app-breadcrumbs,
+.breadcrumbs {
+    display: block;
+    line-height: 3em;
+    background-color: #eee;
+    padding-left: 2em;
+}
+
+.contact-list {
+    margin: 1em;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Contact List</title>
+        <link rel="stylesheet" href="../../node_modules/purecss/pure-min.css"/>
+        <link rel="stylesheet" href="../common/css/stylesheet.css"/>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    </head>
+
+    <body ng-app="ContactList">
+
+        <header>
+            <h1>Contacts</h1>
+        </header>
+
+        <app-breadcrumbs></app-breadcrumbs>
+
+        <div ng-controller="AppCtrl">
+
+            <div ng-view></div>
+
+        </div>
+
+        <script src="../../node_modules/angular/angular.js"></script>
+        <script src="../../node_modules/angular-resource/angular-resource.js"></script>
+        <script src="../../node_modules/angular-route/angular-route.js"></script>
+        <script src="../../node_modules/webcomponents.js/webcomponents-lite.js"></script>
+
+        <script src="app.js"></script>
+        <script src="modules/contacts.js"></script>
+        <script src="services/contacts.js"></script>
+        <script src="../common/js/breadcrumbs.js"></script>
+
+    </body>
+</html>

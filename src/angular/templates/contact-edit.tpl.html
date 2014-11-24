@@ -1,0 +1,22 @@
+<form class="pure-form pure-form-aligned" ng-submit="save(contact)">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="name">Username</label>
+            <input id="name" type="text" placeholder="Username" ng-model="contact.name">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Email" ng-model="contact.email">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="phone">Phone</label>
+            <input id="phone" type="text" placeholder="Phone" ng-model="contact.phone">
+        </div>
+
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">{{submitText}}</button>
+        </div>
+    </fieldset>
+</form>
