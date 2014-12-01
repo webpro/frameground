@@ -1,0 +1,22 @@
+<form class="pure-form pure-form-aligned">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="name">Username</label>
+            {{input value=name placeholder="Username"}}
+        </div>
+
+        <div class="pure-control-group">
+            <label for="email">Email</label>
+            {{input value=email placeholder="Email"}}
+        </div>
+
+        <div class="pure-control-group">
+            <label for="phone">Phone</label>
+            {{input value=phone placeholder="Phone"}}
+        </div>
+
+        <div class="pure-controls">
+            <button {{action "save" model}} class="pure-button pure-button-primary">Create</button>
+        </div>
+    </fieldset>
+</form>
