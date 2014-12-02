@@ -19,9 +19,9 @@ var app = new EmberApp({
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-app.import("../../../../node_modules/webcomponents.js/webcomponents-lite.js");
+app.import("../../../../vendor/webcomponents.js/webcomponents-lite.min.js");
 app.import("../../../common/js/breadcrumbs.js");
-app.import("../../../../node_modules/purecss/pure.css");
+app.import("../../../../vendor/purecss/pure-min.css");
 app.import("../../../common/css/stylesheet.css");
 
 module.exports = app.toTree();
