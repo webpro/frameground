@@ -22,14 +22,14 @@ If a framework doesn't support something out of the box, a sensible solution wil
 
 ## Frameworks
 
-Framework | Setup | Render List | Use XHR/API | CRUD | Tests
-:--|:-:|:-:|:-:|:-:|:-:
-Angular | ✔︎ | ✔︎ | ✔︎ |⬓ | ✘
-Ember (CLI) | ✔︎ | ✔︎ | ✔︎ |⬓ | ✘
+Framework | Setup | Render List | Use XHR/API | Routing | CRUD | Tests
+:--|:-:|:-:|:-:|:-:|:-:|:-:
+Angular | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
+Ember (CLI) | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
+React + Flux | ✔︎ | ✔︎ | ⬓ | ✘ | ✘ | ✘
 
 Currently, I think this list includes interesting frameworks to add:
 
-* React
 * Vue.js
 * Polymer
 * Ampersand.js
@@ -46,23 +46,37 @@ The apps are using an actual endpoint ([example](http://frameground.webpro.nl/co
     git clone https://github.com/webpro/frameground.git
     cd frameground
     npm install
+
+### Angular
     
-    # Angular
-    # Just point a webserver to http://localhost/path/to/frameground/src/angular/
-    
-    # Ember
+Just point a webserver to http://localhost/path/to/frameground/src/angular/.
+
+### Ember
+
+You'll need to have [Ember CLI](http://www.ember-cli.com/) installed (`npm install -g ember-cli`).
+
     cd src/ember
     npm install
     bower install
     npm run start
-    > Visit http://localhost:4200
+
+The application runs at http://localhost:4200.
+
+### React + Flux
+
+    cd src/flux
+    npm install
+    npm start
+
+Point a webserver at http://localhost/path/to/frameground/src/react-flux/.
 
 ## Running instances
 
-You can also just run the application directly:
+You can also run the hosted applications:
 
 * [Angular](http://webpro.github.io/frameground/src/angular/)
 * [Ember](http://webpro.github.io/frameground/src/ember/dist/)
+* [React + Flux](http://webpro.github.io/frameground/src/react-flux/)
 
 ## License
 
