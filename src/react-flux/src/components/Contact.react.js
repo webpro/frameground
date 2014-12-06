@@ -1,5 +1,8 @@
 var React = require('react'),
-    ReactPropTypes = React.PropTypes;
+    ReactPropTypes = React.PropTypes,
+    Router = require('react-router'),
+    Link = Router.Link,
+    ContactStore = require('../stores/ContactStore');
 
 var Contact = React.createClass({
 
@@ -7,27 +10,26 @@ var Contact = React.createClass({
         contact: ReactPropTypes.object.isRequired
     },
 
+    deleteContact: function() {
+        ContactStore.deleteContact(this.props.contact);
+    },
+
     render: function() {
 
         var contact = this.props.contact;
 
-        var url = {
-            details: '#/contacts/' + contact.id,
-            edit: '#/contacts/' + contact.id + '/edit'
-        };
-
         return (
             <tr key={contact.id}>
                 <td>
-                    <a href={url.details}>{contact.name}</a>
+                    <Link to="contactDetails" params={contact}>{contact.name}</Link>
                 </td>
                 <td>
-                    <a href={url.edit}>
+                    <Link to="contactEdit" params={contact}>
                         <i className="fa fa-edit"></i>
-                    </a>
+                    </Link>
                 </td>
                 <td>
-                    <button className="button-warning pure-button">
+                    <button className="button-warning pure-button" onClick={this.deleteContact}>
                         <i className="fa fa-remove"></i>
                     </button>
                 </td>

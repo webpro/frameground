@@ -26,7 +26,7 @@ Framework | Setup | Render List | Use XHR/API | Routing | CRUD | Tests
 :--|:-:|:-:|:-:|:-:|:-:|:-:
 Angular | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
 Ember (CLI) | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
-React + Flux | ✔︎ | ✔︎ | ⬓ | ✘ | ✘ | ✘
+React + Flux | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✘
 
 Currently, I think this list includes interesting frameworks to add:
 

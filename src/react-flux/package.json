@@ -3,13 +3,14 @@
   "version": "0.0.1",
   "description": "JS Frameworks Playground / Flux",
   "repository": "https://github.com/facebook/flux",
-  "main": "src/app.js",
+  "main": "src/index.js",
   "dependencies": {
     "flux": "^2.0.0",
     "keymirror": "~0.1.0",
     "object-assign": "^1.0.0",
     "react": "^0.12.0",
-    "atomic": "git+https://github.com/toddmotto/atomic.git"
+    "react-router": "^0.11.4",
+    "superagent": "^0.21.0"
   },
   "devDependencies": {
     "browserify": "^6.2.0",

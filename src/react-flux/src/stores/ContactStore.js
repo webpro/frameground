@@ -1,6 +1,7 @@
 var EventEmitter = require('events').EventEmitter,
     assign = require('object-assign'),
     ContactListConstants = require('../constants/ConactListConstants'),
+    ContactListActions = require('../actions/ContactListActions'),
     AppDispatcher = require('../dispatcher/AppDispatcher');
 
 var CHANGE_EVENT = 'change';
@@ -9,8 +10,45 @@ var contacts = [];
 
 var ContactStore = assign({}, EventEmitter.prototype, {
 
-    getAll: function() {
+    init: function() {
+        ContactListActions.getContacts();
+    },
+
+    getContact: function(id) {
+        return contacts[id] || null;
+    },
+
+    getContacts: function() {
         return contacts;
+    },
+
+    _setContacts: function(data) {
+        data.forEach(function (contact) {
+            contacts[contact.id] = contact;
+        });
+        this.emitChange();
+    },
+
+    _setContact: function(id, contact) {
+        contacts[id] = contact;
+        this.emitChange();
+    },
+
+    _deleteContact: function(id) {
+        delete contacts[id];
+        this.emitChange();
+    },
+
+    addContact: function (contact, cb) {
+        ContactListActions.createContact(contact, cb);
+    },
+
+    updateContact: function (contact, cb) {
+        ContactListActions.updateContact(contact, cb);
+    },
+
+    deleteContact: function (contact, cb) {
+        ContactListActions.deleteContact(contact, cb);
     },
 
     emitChange: function() {
@@ -33,8 +71,19 @@ AppDispatcher.register(function(payload) {
     switch (action.type) {
 
         case ContactListConstants.REQUEST_CONTACTS_SUCCESS:
-            contacts = action.rawNodes;
-            ContactStore.emitChange();
+            ContactStore._setContacts(action.rawNodes);
+            break;
+
+        case ContactListConstants.SAVE_CONTACT_SUCCESS:
+            ContactStore._setContact(action.rawNode.id, action.rawNode);
+            break;
+
+        case ContactListConstants.UPDATE_CONTACT_SUCCESS:
+            ContactStore._setContact(action.rawNode.id, action.rawNode);
+            break;
+
+        case ContactListConstants.DELETE_CONTACT_SUCCESS:
+            ContactStore._deleteContact(action.rawNode.id, action.rawNode);
             break;
 
         default:
