@@ -27,10 +27,10 @@ Framework | Setup | Render List | Use XHR/API | Routing | CRUD | Tests
 Angular | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
 Ember (CLI) | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
 React + Flux | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✘
+Vue.js | ✔︎ | ✔︎ | ⬓ | ⬓ | ✘ | ✘
 
 Currently, I think this list includes interesting frameworks to add:
 
-* Vue.js
 * Polymer
 * Ampersand.js
 * Backbone
@@ -77,6 +77,7 @@ You can also run the hosted applications:
 * [Angular](http://webpro.github.io/frameground/src/angular/)
 * [Ember](http://webpro.github.io/frameground/src/ember/dist/)
 * [React + Flux](http://webpro.github.io/frameground/src/react-flux/)
+* [Vue.js](http://webpro.github.io/frameground/src/vue/)
 
 ## License
 
