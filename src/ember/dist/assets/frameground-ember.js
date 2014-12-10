@@ -382,19 +382,25 @@
 
     function program1(depth0,data) {
       
+      
+      data.buffer.push("Create contact");
+      }
+
+    function program3(depth0,data) {
+      
       var buffer = '', stack1, helper, options;
       data.buffer.push("\n        <tr>\n            <td>\n                ");
-      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.details", "contact", options) : helperMissing.call(depth0, "link-to", "contacts.details", "contact", options));
+      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.details", "contact", options) : helperMissing.call(depth0, "link-to", "contacts.details", "contact", options));
       if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
       data.buffer.push("\n            </td>\n            <td>\n                ");
-      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.edit", "contact", options) : helperMissing.call(depth0, "link-to", "contacts.edit", "contact", options));
+      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.edit", "contact", options) : helperMissing.call(depth0, "link-to", "contacts.edit", "contact", options));
       if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
       data.buffer.push("\n            </td>\n            <td>\n                <button ");
       data.buffer.push(escapeExpression(helpers.action.call(depth0, "delete", "contact", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
       data.buffer.push(" class=\"button-warning pure-button\">\n                    <i class=\"fa fa-remove\"></i>\n                </button>\n            </td>\n        </tr>\n        ");
       return buffer;
       }
-    function program2(depth0,data) {
+    function program4(depth0,data) {
       
       var buffer = '', stack1;
       data.buffer.push("\n                    ");
@@ -404,26 +410,20 @@
       return buffer;
       }
 
-    function program4(depth0,data) {
+    function program6(depth0,data) {
       
       
       data.buffer.push("\n                    <i class=\"fa fa-edit\"></i>\n                ");
       }
 
-    function program6(depth0,data) {
-      
-      
-      data.buffer.push("Create contact");
-      }
-
-      data.buffer.push("<table class=\"pure-table pure-table-striped contact-list\">\n    <thead>\n        <tr>\n            <th>Name</th>\n            <th></th>\n            <th></th>\n        </tr>\n    </thead>\n\n    <tbody>\n        ");
-      stack1 = helpers.each.call(depth0, "contact", "in", "controller", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n    </tbody>\n</table>\n\n");
       stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
         'class': ("pure-button pure-button-primary")
-      },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contacts.create", options) : helperMissing.call(depth0, "link-to", "contacts.create", options));
+      },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contacts.create", options) : helperMissing.call(depth0, "link-to", "contacts.create", options));
       if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+      data.buffer.push("\n\n<table class=\"pure-table pure-table-striped contact-list\">\n    <thead>\n        <tr>\n            <th>Name</th>\n            <th></th>\n            <th></th>\n        </tr>\n    </thead>\n\n    <tbody>\n        ");
+      stack1 = helpers.each.call(depth0, "contact", "in", "controller", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+      data.buffer.push("\n    </tbody>\n</table>\n");
       return buffer;
       
     });

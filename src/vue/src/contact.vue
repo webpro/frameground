@@ -2,6 +2,7 @@
     var Store = require('./store');
 
     module.exports = {
+        replace: true,
         methods: {
             deleteContact: function(contact) {
                 Store.deleteContact(contact, function(contact) {

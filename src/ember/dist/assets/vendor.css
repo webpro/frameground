@@ -31,6 +31,9 @@ app-breadcrumbs,
     padding-left: 2em;
 }
 
-.contact-list {
-    margin: 1em;
+dl,
+.contact-list,
+.pure-button-primary {
+    margin: 0.5em;
 }
+

@@ -30,6 +30,7 @@
 
 <template>
     <div>
+        <a href="#/contacts/create" class="pure-button pure-button-primary">Create contact</a>
         <table class="pure-table pure-table-striped contact-list">
             <thead>
                 <tr>
@@ -38,8 +39,9 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody v-repeat="contacts | orderBy 'name'" v-component="contact"></tbody>
+            <tbody>
+                <tr v-repeat="contacts | orderBy 'name'" v-component="contact"></tr>
+            </tbody>
         </table>
-        <a href="#/contacts/create" class="pure-button pure-button-primary">Create contact</a>
     </div>
 </template>

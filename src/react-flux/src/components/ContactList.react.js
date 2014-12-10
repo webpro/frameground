@@ -36,6 +36,7 @@ var ContactList = React.createClass({
 
         return (
             <div>
+                <Link to="contactCreate" className="pure-button pure-button-primary">Create contact</Link>
                 <table className="pure-table pure-table-striped contact-list">
                     <thead>
                         <tr>
@@ -48,7 +49,6 @@ var ContactList = React.createClass({
                         {contacts}
                     </tbody>
                 </table>
-                <Link to="contactCreate" className="pure-button pure-button-primary">Create contact</Link>
             </div>
         );
     },
