@@ -1,5 +1,5 @@
 <script>
-    var request = require('superagent'),
+    var Store = require('./store'),
         contact = require('./contact.vue');
 
     module.exports = {
@@ -12,13 +12,16 @@
                 contacts: []
             };
         },
-        compiled: function () {
+        created: function() {
+            this.$on('DELETE_CONTACT_SUCCESS', this.getContacts.bind(this));
+        },
+        attached: function() {
             this.getContacts();
         },
         methods: {
             getContacts: function() {
-                request.get('http://localhost:3000/contacts', function(res) {
-                    this.contacts = res.body.contacts;
+                Store.getContacts(function(contacts) {
+                    this.contacts = contacts;
                 }.bind(this));
             }
         }
@@ -37,5 +40,6 @@
             </thead>
             <tbody v-repeat="contacts | orderBy 'name'" v-component="contact"></tbody>
         </table>
+        <a href="#/contacts/create" class="pure-button pure-button-primary">Create contact</a>
     </div>
 </template>

@@ -10,7 +10,7 @@
   "dependencies": {
     "director": "^1.2.5",
     "superagent": "^0.21.0",
-    "vue": "0.11.3"
+    "vue": "^0.11.4"
   },
   "devDependencies": {
     "browserify": "^7.0.0",
