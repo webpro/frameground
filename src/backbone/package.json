@@ -1,0 +1,30 @@
+{
+  "name": "frameground-backbone",
+  "version": "0.0.1",
+  "description": "JS Frameworks Playground / Backbone",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webpro/frameground.git"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "jquery": "^2.1.1",
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {
+    "browserify": "^7.0.0",
+    "jstify": "^0.7.0",
+    "uglify-js": "^2.4.16",
+    "watchify": "^2.1.1"
+  },
+  "scripts": {
+    "start": "watchify -v -t jstify -e src/index.js -o dist/bundle.js",
+    "build": "browserify -t jstify src/index.js | uglifyjs -c -m > dist/bundle.min.js"
+  },
+  "author": {
+    "name": "Lars Kappert",
+    "email": "lars@webpro.nl"
+  },
+  "license": "MIT"
+}
