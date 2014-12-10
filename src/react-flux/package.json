@@ -2,7 +2,10 @@
   "name": "frameground-flux",
   "version": "0.0.1",
   "description": "JS Frameworks Playground / Flux",
-  "repository": "https://github.com/facebook/flux",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webpro/frameground.git"
+  },
   "main": "src/index.js",
   "dependencies": {
     "flux": "^2.0.0",
@@ -27,6 +30,7 @@
     "name": "Lars Kappert",
     "email": "lars@webpro.nl"
   },
+  "license": "MIT",
   "browserify": {
     "transform": [
       "reactify",
