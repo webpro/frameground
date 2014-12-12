@@ -28,4 +28,4 @@
     };
 </script>
 
-<template src="./form.html"/>
+<template src="./contactForm.html"/>

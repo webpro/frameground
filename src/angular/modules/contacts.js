@@ -5,15 +5,15 @@ angular.module('contacts', ['services.contacts']).config(['$routeProvider', func
             templateUrl: 'templates/contact.tpl.html'
         })
         .when('/contacts/create', {
-            templateUrl: 'templates/contact-edit.tpl.html',
+            templateUrl: 'templates/contactEdit.tpl.html',
             controller: 'ContactCreateCtrl'
         })
         .when('/contacts/:contactId', {
-            templateUrl: 'templates/contact-details.tpl.html',
+            templateUrl: 'templates/contactDetails.tpl.html',
             controller: 'ContactDetailCtrl'
         })
         .when('/contacts/:contactId/edit', {
-            templateUrl: 'templates/contact-edit.tpl.html',
+            templateUrl: 'templates/contactEdit.tpl.html',
             controller: 'ContactEditCtrl'
         })
 
