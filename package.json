@@ -11,7 +11,8 @@
     "faker": "^2.1.0"
   },
   "scripts": {
-    "service": "dyson service"
+    "start": "dyson service",
+    "build": "cd src/backbone && npm run build && cd ../../src/ember && npm run build && cd ../../src/react-flux && npm run build && cd ../../src/vue && npm run build; "
   },
   "author": {
     "name": "Lars Kappert",

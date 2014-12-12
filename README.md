@@ -25,7 +25,7 @@ If a framework doesn't support something out of the box, a sensible solution wil
 Framework | Setup | Render List | Use XHR/API | Routing | CRUD | Tests
 :--|:-:|:-:|:-:|:-:|:-:|:-:
 Angular | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
-Backbone | ✔︎ | ✔︎ | ⬓ | ⬓ | ✘ | ✘
+Backbone | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✘
 Ember (CLI) | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
 React + Flux | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✘
 Vue.js | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ⬓ | ✘
