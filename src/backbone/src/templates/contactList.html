@@ -1,4 +1,5 @@
-<a href="#/contacts/create" class="pure-button pure-button-primary">Create contact</a>
+<a href="#contacts/create" class="pure-button pure-button-primary">Create contact</a>
+
 <table class="pure-table pure-table-striped contact-list">
     <thead>
         <tr>
@@ -7,21 +8,5 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        <% _.each(contacts, function(contact){ %>
-        <tr>
-            <td>
-                <a href="#/contacts/<%= contact.id %>"><%= contact.name %></a>
-            </td>
-            <td>
-                <a href="#/contacts/<%= contact.id %>/edit"><i class="fa fa-edit"></i></a>
-            </td>
-            <td>
-                <button class="button-warning pure-button">
-                    <i class="fa fa-remove"></i>
-                </button>
-            </td>
-        </tr>
-        <% }); %>
-    </tbody>
+    <tbody></tbody>
 </table>

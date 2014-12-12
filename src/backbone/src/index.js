@@ -5,8 +5,12 @@ var $ = require('jquery'),
 
 Backbone.$ = $;
 
-new Router({
-    view: new App()
+var app = new App();
+
+var router = new Router({
+    view: app
 });
+
+app.router = router;
 
 Backbone.history.start();

@@ -7,12 +7,27 @@ module.exports = Backbone.Router.extend({
     },
 
     routes: {
-        "": "contactList",
-        "contacts": "contactList"
-    },
-
-    contactList: function() {
-        this.appView.trigger('show:contactList');
+        '': contactList,
+        'contacts': contactList,
+        'contacts/create': contactCreate,
+        'contacts/:id': contactDetails,
+        'contacts/:id/edit': contactEdit
     }
 
 });
+
+function contactList() {
+    this.appView.trigger('show:contactList');
+}
+
+function contactCreate() {
+    this.appView.trigger('show:contactCreate');
+}
+
+function contactDetails(id) {
+    this.appView.trigger('show:contactDetails', {id: id});
+}
+
+function contactEdit(id) {
+    this.appView.trigger('show:contactEdit', {id: id});
+}
