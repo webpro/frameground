@@ -2,12 +2,18 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Contact List</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         {{content-for 'head'}}
+
         <link rel="stylesheet" href="assets/vendor.css">
         <link rel="stylesheet" href="assets/frameground-ember.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+        {{content-for 'head-footer'}}
     </head>
     <body>
 
@@ -19,5 +25,7 @@
 
         <script src="assets/vendor.js"></script>
         <script src="assets/frameground-ember.js"></script>
+
+        {{content-for 'body-footer'}}
     </body>
 </html>
