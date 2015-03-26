@@ -1,656 +1,1214 @@
+/* jshint ignore:start */
 
-;define("frameground-ember/app", 
-  ["ember","ember/resolver","ember/load-initializers","frameground-ember/config/environment","ember-data","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    var Resolver = __dependency2__["default"];
-    var loadInitializers = __dependency3__["default"];
-    var config = __dependency4__["default"];
-    var DS = __dependency5__["default"];
+/* jshint ignore:end */
 
-    Ember.MODEL_FACTORY_INJECTIONS = true;
+define('frameground-ember/app', ['exports', 'ember', 'ember/resolver', 'ember/load-initializers', 'frameground-ember/config/environment', 'ember-data'], function (exports, Ember, Resolver, loadInitializers, config, DS) {
 
-    var App = Ember.Application.extend({
-        modulePrefix: config.modulePrefix,
-        podModulePrefix: config.podModulePrefix,
-        Resolver: Resolver,
-        ApplicationAdapter: DS.RESTAdapter.extend({
-            host: 'http://frameground.webpro.nl'
+    'use strict';
+
+    Ember['default'].MODEL_FACTORY_INJECTIONS = true;
+
+    var App = Ember['default'].Application.extend({
+        modulePrefix: config['default'].modulePrefix,
+        podModulePrefix: config['default'].podModulePrefix,
+        Resolver: Resolver['default'],
+        ApplicationAdapter: DS['default'].RESTAdapter.extend({
+            host: "http://frameground.webpro.nl"
         })
     });
 
-    loadInitializers(App, config.modulePrefix);
+    loadInitializers['default'](App, config['default'].modulePrefix);
 
-    __exports__["default"] = App;
-  });
-;define("frameground-ember/controllers/contact", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
+    exports['default'] = App;
 
-    __exports__["default"] = Ember.ObjectController.extend({});
-  });
-;define("frameground-ember/controllers/contacts", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
+});
+define('frameground-ember/controllers/contact', ['exports', 'ember'], function (exports, Ember) {
 
-    __exports__["default"] = Ember.ArrayController.extend({});
-  });
-;define("frameground-ember/controllers/contacts/create", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
+	'use strict';
 
-    __exports__["default"] = Ember.ObjectController.extend({
-        needs: ['contact'],
+	exports['default'] = Ember['default'].ObjectController.extend({});
+
+});
+define('frameground-ember/controllers/contacts', ['exports', 'ember'], function (exports, Ember) {
+
+	'use strict';
+
+	exports['default'] = Ember['default'].ArrayController.extend({});
+
+});
+define('frameground-ember/controllers/contacts/create', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].ObjectController.extend({
+        needs: ["contact"],
         actions: {
-            save: function(contact) {
+            save: function save(contact) {
                 contact.save();
-                this.transitionToRoute('contacts');
+                this.transitionToRoute("contacts");
             }
         }
     });
-  });
-;define("frameground-ember/controllers/contacts/details", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
 
-    __exports__["default"] = Ember.ObjectController.extend({
-        needs: ['contact']
+});
+define('frameground-ember/controllers/contacts/details', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].ObjectController.extend({
+        needs: ["contact"]
     });
-  });
-;define("frameground-ember/controllers/contacts/edit", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
 
-    __exports__["default"] = Ember.ObjectController.extend({
-        needs: ['contact'],
+});
+define('frameground-ember/controllers/contacts/edit', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].ObjectController.extend({
+        needs: ["contact"],
         actions: {
-            save: function() {
-                this.get('model').save();
-                this.transitionToRoute('contacts');
+            save: function save() {
+                this.get("model").save();
+                this.transitionToRoute("contacts");
             }
         }
     });
-  });
-;define("frameground-ember/controllers/contacts/index", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
 
-    __exports__["default"] = Ember.ArrayController.extend({
-        needs: ['contacts'],
-        sortProperties: ['name'],
+});
+define('frameground-ember/controllers/contacts/index', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].ArrayController.extend({
+        needs: ["contacts"],
+        sortProperties: ["name"],
         sortAscending: true,
         actions: {
-            "delete": function(contact) {
+            "delete": function _delete(contact) {
                 contact.deleteRecord();
                 contact.save();
-                this.transitionToRoute('contacts');
+                this.transitionToRoute("contacts");
             }
         }
     });
-  });
-;define("frameground-ember/initializers/export-application-global", 
-  ["ember","frameground-ember/config/environment","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    var config = __dependency2__["default"];
 
-    function initialize(container, application) {
-      var classifiedName = Ember.String.classify(config.modulePrefix);
+});
+define('frameground-ember/initializers/app-version', ['exports', 'frameground-ember/config/environment', 'ember'], function (exports, config, Ember) {
 
-      if (config.exportApplicationGlobal) {
-        window[classifiedName] = application;
+  'use strict';
+
+  var classify = Ember['default'].String.classify;
+  var registered = false;
+
+  exports['default'] = {
+    name: "App Version",
+    initialize: function initialize(container, application) {
+      if (!registered) {
+        var appName = classify(application.toString());
+        Ember['default'].libraries.register(appName, config['default'].APP.version);
+        registered = true;
       }
-    };
-    __exports__.initialize = initialize;
-    __exports__["default"] = {
-      name: 'export-application-global',
-
-      initialize: initialize
-    };
-  });
-;define("frameground-ember/models/contact", 
-  ["ember-data","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var DS = __dependency1__["default"];
-
-    var attr = DS.attr;
-
-    __exports__["default"] = DS.Model.extend({
-        name: attr('string'),
-        email: attr('string'),
-        phone: attr('string')
-    });
-  });
-;define("frameground-ember/router", 
-  ["ember","frameground-ember/config/environment","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    var config = __dependency2__["default"];
-
-    var Router = Ember.Router.extend({
-        location: config.locationType
-    });
-
-    Router.map(function() {
-
-        this.resource('contacts', function() {
-
-            this.route('details', {path: '/:id'});
-
-            this.route('edit', {path: '/:id/edit'});
-
-            this.route('create', {path: '/create'});
-
-        });
-
-    });
-
-    __exports__["default"] = Router;
-  });
-;define("frameground-ember/routes/contact", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-
-    __exports__["default"] = Ember.Route.extend({
-        model: function(params) {
-            return this.store.find('contacts', params.id);
-        }
-    });
-  });
-;define("frameground-ember/routes/contacts", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-
-    __exports__["default"] = Ember.Route.extend({
-        model: function() {
-            return this.store.find('contact');
-        }
-    });
-  });
-;define("frameground-ember/routes/contacts/create", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-
-    __exports__["default"] = Ember.Route.extend({
-        model: function() {
-            return this.store.createRecord('contact');
-        }
-    });
-  });
-;define("frameground-ember/routes/contacts/details", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-
-    __exports__["default"] = Ember.Route.extend({
-        model: function(params) {
-            return this.store.find('contact', params.id);
-        }
-    });
-  });
-;define("frameground-ember/routes/contacts/edit", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-
-    __exports__["default"] = Ember.Route.extend({
-        model: function(params) {
-            return this.store.find('contact', params.id);
-        }
-    });
-  });
-;define("frameground-ember/routes/index", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-
-    __exports__["default"] = Ember.Route.extend({
-        beforeModel: function(){
-            this.transitionTo('contacts');
-        }
-    });
-  });
-;define("frameground-ember/templates/application", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    __exports__["default"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [4,'>= 1.0.0'];
-    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-      var buffer = '', stack1;
-
-
-      data.buffer.push("<app-breadcrumbs></app-breadcrumbs>\n\n");
-      stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n");
-      return buffer;
-      
-    });
-  });
-;define("frameground-ember/templates/contacts", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    __exports__["default"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [4,'>= 1.0.0'];
-    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-      var buffer = '', stack1;
-
-
-      data.buffer.push("<div class=\"pure-g\">\n    <div class=\"pure-u-1-3\">\n        ");
-      stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n    </div>\n    <div class=\"pure-u-2-3\"></div>\n</div>");
-      return buffer;
-      
-    });
-  });
-;define("frameground-ember/templates/contacts/create", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    __exports__["default"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [4,'>= 1.0.0'];
-    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-      var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-
-
-      data.buffer.push("<form class=\"pure-form pure-form-aligned\">\n    <fieldset>\n        <div class=\"pure-control-group\">\n            <label for=\"name\">Username</label>\n            ");
-      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-        'value': ("name"),
-        'placeholder': ("Username")
-      },hashTypes:{'value': "ID",'placeholder': "STRING"},hashContexts:{'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-      data.buffer.push("\n        </div>\n\n        <div class=\"pure-control-group\">\n            <label for=\"email\">Email</label>\n            ");
-      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-        'value': ("email"),
-        'placeholder': ("Email")
-      },hashTypes:{'value': "ID",'placeholder': "STRING"},hashContexts:{'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-      data.buffer.push("\n        </div>\n\n        <div class=\"pure-control-group\">\n            <label for=\"phone\">Phone</label>\n            ");
-      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-        'value': ("phone"),
-        'placeholder': ("Phone")
-      },hashTypes:{'value': "ID",'placeholder': "STRING"},hashContexts:{'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-      data.buffer.push("\n        </div>\n\n        <div class=\"pure-controls\">\n            <button ");
-      data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", "model", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-      data.buffer.push(" class=\"pure-button pure-button-primary\">Create</button>\n        </div>\n    </fieldset>\n</form>\n");
-      return buffer;
-      
-    });
-  });
-;define("frameground-ember/templates/contacts/details", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    __exports__["default"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [4,'>= 1.0.0'];
-    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-      var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
-
-    function program1(depth0,data) {
-      
-      
-      data.buffer.push("Edit");
-      }
-
-      data.buffer.push("<dl>\n    <dt>");
-      stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("</dt>\n    <dd>");
-      stack1 = helpers._triageMustache.call(depth0, "email", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("</dd>\n    <dd>");
-      stack1 = helpers._triageMustache.call(depth0, "phone", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("</dd>\n</dl>\n\n");
-      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-        'class': ("pure-button pure-button-primary")
-      },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.edit", "model", options) : helperMissing.call(depth0, "link-to", "contacts.edit", "model", options));
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      return buffer;
-      
-    });
-  });
-;define("frameground-ember/templates/contacts/edit", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    __exports__["default"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [4,'>= 1.0.0'];
-    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-      var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-
-
-      data.buffer.push("<form class=\"pure-form pure-form-aligned\">\n    <fieldset>\n        <div class=\"pure-control-group\">\n            <label for=\"name\">Username</label>\n            ");
-      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-        'value': ("name")
-      },hashTypes:{'value': "ID"},hashContexts:{'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-      data.buffer.push("\n        </div>\n\n        <div class=\"pure-control-group\">\n            <label for=\"email\">Email</label>\n            ");
-      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-        'value': ("email")
-      },hashTypes:{'value': "ID"},hashContexts:{'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-      data.buffer.push("\n        </div>\n\n        <div class=\"pure-control-group\">\n            <label for=\"phone\">Phone</label>\n            ");
-      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-        'value': ("phone")
-      },hashTypes:{'value': "ID"},hashContexts:{'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-      data.buffer.push("\n        </div>\n\n        <div class=\"pure-controls\">\n            <button ");
-      data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", "contact", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-      data.buffer.push(" class=\"pure-button pure-button-primary\">Save</button>\n        </div>\n    </fieldset>\n</form>\n");
-      return buffer;
-      
-    });
-  });
-;define("frameground-ember/templates/contacts/index", 
-  ["ember","exports"],
-  function(__dependency1__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    __exports__["default"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [4,'>= 1.0.0'];
-    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-      var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-
-    function program1(depth0,data) {
-      
-      
-      data.buffer.push("Create contact");
-      }
-
-    function program3(depth0,data) {
-      
-      var buffer = '', stack1, helper, options;
-      data.buffer.push("\n        <tr>\n            <td>\n                ");
-      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.details", "contact", options) : helperMissing.call(depth0, "link-to", "contacts.details", "contact", options));
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n            </td>\n            <td>\n                ");
-      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "contacts.edit", "contact", options) : helperMissing.call(depth0, "link-to", "contacts.edit", "contact", options));
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n            </td>\n            <td>\n                <button ");
-      data.buffer.push(escapeExpression(helpers.action.call(depth0, "delete", "contact", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-      data.buffer.push(" class=\"button-warning pure-button\">\n                    <i class=\"fa fa-remove\"></i>\n                </button>\n            </td>\n        </tr>\n        ");
-      return buffer;
-      }
-    function program4(depth0,data) {
-      
-      var buffer = '', stack1;
-      data.buffer.push("\n                    ");
-      stack1 = helpers._triageMustache.call(depth0, "contact.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n                ");
-      return buffer;
-      }
-
-    function program6(depth0,data) {
-      
-      
-      data.buffer.push("\n                    <i class=\"fa fa-edit\"></i>\n                ");
-      }
-
-      stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-        'class': ("pure-button pure-button-primary")
-      },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "contacts.create", options) : helperMissing.call(depth0, "link-to", "contacts.create", options));
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n\n<table class=\"pure-table pure-table-striped contact-list\">\n    <thead>\n        <tr>\n            <th>Name</th>\n            <th></th>\n            <th></th>\n        </tr>\n    </thead>\n\n    <tbody>\n        ");
-      stack1 = helpers.each.call(depth0, "contact", "in", "controller", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
-      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-      data.buffer.push("\n    </tbody>\n</table>\n");
-      return buffer;
-      
-    });
-  });
-;define("frameground-ember/tests/app.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - .');
-    test('app.js should pass jshint', function() { 
-      ok(true, 'app.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/controllers/contact.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - controllers');
-    test('controllers/contact.js should pass jshint', function() { 
-      ok(true, 'controllers/contact.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/controllers/contacts.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - controllers');
-    test('controllers/contacts.js should pass jshint', function() { 
-      ok(true, 'controllers/contacts.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/controllers/contacts/create.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - controllers/contacts');
-    test('controllers/contacts/create.js should pass jshint', function() { 
-      ok(true, 'controllers/contacts/create.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/controllers/contacts/details.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - controllers/contacts');
-    test('controllers/contacts/details.js should pass jshint', function() { 
-      ok(true, 'controllers/contacts/details.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/controllers/contacts/edit.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - controllers/contacts');
-    test('controllers/contacts/edit.js should pass jshint', function() { 
-      ok(true, 'controllers/contacts/edit.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/controllers/contacts/index.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - controllers/contacts');
-    test('controllers/contacts/index.js should pass jshint', function() { 
-      ok(true, 'controllers/contacts/index.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/frameground-ember/tests/helpers/resolver.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - frameground-ember/tests/helpers');
-    test('frameground-ember/tests/helpers/resolver.js should pass jshint', function() { 
-      ok(true, 'frameground-ember/tests/helpers/resolver.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/frameground-ember/tests/helpers/start-app.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - frameground-ember/tests/helpers');
-    test('frameground-ember/tests/helpers/start-app.js should pass jshint', function() { 
-      ok(true, 'frameground-ember/tests/helpers/start-app.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/frameground-ember/tests/test-helper.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - frameground-ember/tests');
-    test('frameground-ember/tests/test-helper.js should pass jshint', function() { 
-      ok(true, 'frameground-ember/tests/test-helper.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/helpers/resolver", 
-  ["ember/resolver","frameground-ember/config/environment","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
-    "use strict";
-    var Resolver = __dependency1__["default"];
-    var config = __dependency2__["default"];
-
-    var resolver = Resolver.create();
-
-    resolver.namespace = {
-      modulePrefix: config.modulePrefix,
-      podModulePrefix: config.podModulePrefix
-    };
-
-    __exports__["default"] = resolver;
-  });
-;define("frameground-ember/tests/helpers/start-app", 
-  ["ember","frameground-ember/app","frameground-ember/router","frameground-ember/config/environment","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
-    "use strict";
-    var Ember = __dependency1__["default"];
-    var Application = __dependency2__["default"];
-    var Router = __dependency3__["default"];
-    var config = __dependency4__["default"];
-
-    __exports__["default"] = function startApp(attrs) {
-      var App;
-
-      var attributes = Ember.merge({}, config.APP);
-      attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
-
-      Router.reopen({
-        location: 'none'
-      });
-
-      Ember.run(function() {
-        App = Application.create(attributes);
-        App.setupForTesting();
-        App.injectTestHelpers();
-      });
-
-      App.reset(); // this shouldn't be needed, i want to be able to "start an app at a specific URL"
-
-      return App;
     }
-  });
-;define("frameground-ember/tests/models/contact.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - models');
-    test('models/contact.js should pass jshint', function() { 
-      ok(true, 'models/contact.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/router.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - .');
-    test('router.js should pass jshint', function() { 
-      ok(true, 'router.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/routes/contact.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - routes');
-    test('routes/contact.js should pass jshint', function() { 
-      ok(true, 'routes/contact.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/routes/contacts.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - routes');
-    test('routes/contacts.js should pass jshint', function() { 
-      ok(true, 'routes/contacts.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/routes/contacts/create.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - routes/contacts');
-    test('routes/contacts/create.js should pass jshint', function() { 
-      ok(true, 'routes/contacts/create.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/routes/contacts/details.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - routes/contacts');
-    test('routes/contacts/details.js should pass jshint', function() { 
-      ok(true, 'routes/contacts/details.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/routes/contacts/edit.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - routes/contacts');
-    test('routes/contacts/edit.js should pass jshint', function() { 
-      ok(true, 'routes/contacts/edit.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/routes/index.jshint", 
-  [],
-  function() {
-    "use strict";
-    module('JSHint - routes');
-    test('routes/index.js should pass jshint', function() { 
-      ok(true, 'routes/index.js should pass jshint.'); 
-    });
-  });
-;define("frameground-ember/tests/test-helper", 
-  ["frameground-ember/tests/helpers/resolver","ember-qunit"],
-  function(__dependency1__, __dependency2__) {
-    "use strict";
-    var resolver = __dependency1__["default"];
-    var setResolver = __dependency2__.setResolver;
+  };
 
-    setResolver(resolver);
+});
+define('frameground-ember/initializers/export-application-global', ['exports', 'ember', 'frameground-ember/config/environment'], function (exports, Ember, config) {
 
-    document.write('<div id="ember-testing-container"><div id="ember-testing"></div></div>');
+  'use strict';
 
-    QUnit.config.urlConfig.push({ id: 'nocontainer', label: 'Hide container'});
-    var containerVisibility = QUnit.urlParams.nocontainer ? 'hidden' : 'visible';
-    document.getElementById('ember-testing-container').style.visibility = containerVisibility;
+  exports.initialize = initialize;
+
+  function initialize(container, application) {
+    var classifiedName = Ember['default'].String.classify(config['default'].modulePrefix);
+
+    if (config['default'].exportApplicationGlobal && !window[classifiedName]) {
+      window[classifiedName] = application;
+    }
+  }
+
+  ;
+
+  exports['default'] = {
+    name: "export-application-global",
+
+    initialize: initialize
+  };
+
+});
+define('frameground-ember/models/contact', ['exports', 'ember-data'], function (exports, DS) {
+
+    'use strict';
+
+    var attr = DS['default'].attr;
+
+    exports['default'] = DS['default'].Model.extend({
+        name: attr("string"),
+        email: attr("string"),
+        phone: attr("string")
+    });
+
+});
+define('frameground-ember/router', ['exports', 'ember', 'frameground-ember/config/environment'], function (exports, Ember, config) {
+
+    'use strict';
+
+    var Router = Ember['default'].Router.extend({
+        location: config['default'].locationType
+    });
+
+    Router.map(function () {
+
+        this.resource("contacts", function () {
+
+            this.route("details", { path: "/:id" });
+
+            this.route("edit", { path: "/:id/edit" });
+
+            this.route("create", { path: "/create" });
+        });
+    });
+
+    exports['default'] = Router;
+
+});
+define('frameground-ember/routes/contact', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Route.extend({
+        model: function model(params) {
+            return this.store.find("contacts", params.id);
+        }
+    });
+
+});
+define('frameground-ember/routes/contacts', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Route.extend({
+        model: function model() {
+            return this.store.find("contact");
+        }
+    });
+
+});
+define('frameground-ember/routes/contacts/create', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Route.extend({
+        model: function model() {
+            return this.store.createRecord("contact");
+        }
+    });
+
+});
+define('frameground-ember/routes/contacts/details', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Route.extend({
+        model: function model(params) {
+            return this.store.find("contact", params.id);
+        }
+    });
+
+});
+define('frameground-ember/routes/contacts/edit', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Route.extend({
+        model: function model(params) {
+            return this.store.find("contact", params.id);
+        }
+    });
+
+});
+define('frameground-ember/routes/index', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Route.extend({
+        beforeModel: function beforeModel() {
+            this.transitionTo("contacts");
+        }
+    });
+
+});
+define('frameground-ember/templates/application', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("app-breadcrumbs");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, content = hooks.content;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var morph0 = dom.createMorphAt(fragment,1,2,contextualElement);
+        content(env, morph0, context, "outlet");
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('frameground-ember/templates/contacts', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createElement("div");
+        dom.setAttribute(el0,"class","pure-g");
+        var el1 = dom.createTextNode("\n    ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"class","pure-u-1-3");
+        var el2 = dom.createTextNode("\n        ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n    ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"class","pure-u-2-3");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, content = hooks.content;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),0,1);
+        content(env, morph0, context, "outlet");
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('frameground-ember/templates/contacts/create', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("form");
+        dom.setAttribute(el1,"class","pure-form pure-form-aligned");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("fieldset");
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-control-group");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4,"for","name");
+        var el5 = dom.createTextNode("Username");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-control-group");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4,"for","email");
+        var el5 = dom.createTextNode("Email");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-control-group");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4,"for","phone");
+        var el5 = dom.createTextNode("Phone");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-controls");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("button");
+        dom.setAttribute(el4,"class","pure-button pure-button-primary");
+        var el5 = dom.createTextNode("Create");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, get = hooks.get, inline = hooks.inline, element = hooks.element;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var element0 = dom.childAt(fragment, [0, 1]);
+        var element1 = dom.childAt(element0, [7, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),2,3);
+        var morph1 = dom.createMorphAt(dom.childAt(element0, [3]),2,3);
+        var morph2 = dom.createMorphAt(dom.childAt(element0, [5]),2,3);
+        inline(env, morph0, context, "input", [], {"value": get(env, context, "name"), "placeholder": "Username"});
+        inline(env, morph1, context, "input", [], {"value": get(env, context, "email"), "placeholder": "Email"});
+        inline(env, morph2, context, "input", [], {"value": get(env, context, "phone"), "placeholder": "Phone"});
+        element(env, element1, context, "action", ["save", get(env, context, "model")], {});
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('frameground-ember/templates/contacts/details', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createTextNode("Edit");
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    return {
+      isHTMLBars: true,
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("dl");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("dt");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("dd");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("dd");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, content = hooks.content, get = hooks.get, block = hooks.block;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        if (this.cachedFragment) { dom.repairClonedNode(fragment,[2]); }
+        var element0 = dom.childAt(fragment, [0]);
+        var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),-1,-1);
+        var morph1 = dom.createMorphAt(dom.childAt(element0, [3]),-1,-1);
+        var morph2 = dom.createMorphAt(dom.childAt(element0, [5]),-1,-1);
+        var morph3 = dom.createMorphAt(fragment,1,2,contextualElement);
+        content(env, morph0, context, "name");
+        content(env, morph1, context, "email");
+        content(env, morph2, context, "phone");
+        block(env, morph3, context, "link-to", ["contacts.edit", get(env, context, "model")], {"class": "pure-button pure-button-primary"}, child0, null);
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('frameground-ember/templates/contacts/edit', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("form");
+        dom.setAttribute(el1,"class","pure-form pure-form-aligned");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("fieldset");
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-control-group");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4,"for","name");
+        var el5 = dom.createTextNode("Username");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-control-group");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4,"for","email");
+        var el5 = dom.createTextNode("Email");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-control-group");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("label");
+        dom.setAttribute(el4,"for","phone");
+        var el5 = dom.createTextNode("Phone");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("div");
+        dom.setAttribute(el3,"class","pure-controls");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("button");
+        dom.setAttribute(el4,"class","pure-button pure-button-primary");
+        var el5 = dom.createTextNode("Save");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, get = hooks.get, inline = hooks.inline, element = hooks.element;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var element0 = dom.childAt(fragment, [0, 1]);
+        var element1 = dom.childAt(element0, [7, 1]);
+        var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),2,3);
+        var morph1 = dom.createMorphAt(dom.childAt(element0, [3]),2,3);
+        var morph2 = dom.createMorphAt(dom.childAt(element0, [5]),2,3);
+        inline(env, morph0, context, "input", [], {"value": get(env, context, "name")});
+        inline(env, morph1, context, "input", [], {"value": get(env, context, "email")});
+        inline(env, morph2, context, "input", [], {"value": get(env, context, "phone")});
+        element(env, element1, context, "action", ["save", get(env, context, "contact")], {});
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('frameground-ember/templates/contacts/index', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createTextNode("Create contact");
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          return fragment;
+        }
+      };
+    }());
+    var child1 = (function() {
+      var child0 = (function() {
+        return {
+          isHTMLBars: true,
+          blockParams: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          build: function build(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("                    ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          render: function render(context, env, contextualElement) {
+            var dom = env.dom;
+            var hooks = env.hooks, content = hooks.content;
+            dom.detectNamespace(contextualElement);
+            var fragment;
+            if (env.useFragmentCache && dom.canClone) {
+              if (this.cachedFragment === null) {
+                fragment = this.build(dom);
+                if (this.hasRendered) {
+                  this.cachedFragment = fragment;
+                } else {
+                  this.hasRendered = true;
+                }
+              }
+              if (this.cachedFragment) {
+                fragment = dom.cloneNode(this.cachedFragment, true);
+              }
+            } else {
+              fragment = this.build(dom);
+            }
+            var morph0 = dom.createMorphAt(fragment,0,1,contextualElement);
+            content(env, morph0, context, "contact.name");
+            return fragment;
+          }
+        };
+      }());
+      var child1 = (function() {
+        return {
+          isHTMLBars: true,
+          blockParams: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          build: function build(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("                    ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("i");
+            dom.setAttribute(el1,"class","fa fa-edit");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          render: function render(context, env, contextualElement) {
+            var dom = env.dom;
+            dom.detectNamespace(contextualElement);
+            var fragment;
+            if (env.useFragmentCache && dom.canClone) {
+              if (this.cachedFragment === null) {
+                fragment = this.build(dom);
+                if (this.hasRendered) {
+                  this.cachedFragment = fragment;
+                } else {
+                  this.hasRendered = true;
+                }
+              }
+              if (this.cachedFragment) {
+                fragment = dom.cloneNode(this.cachedFragment, true);
+              }
+            } else {
+              fragment = this.build(dom);
+            }
+            return fragment;
+          }
+        };
+      }());
+      return {
+        isHTMLBars: true,
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("        ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("tr");
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("            ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("            ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("td");
+          var el3 = dom.createTextNode("\n                ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("button");
+          dom.setAttribute(el3,"class","button-warning pure-button");
+          var el4 = dom.createTextNode("\n                    ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("i");
+          dom.setAttribute(el4,"class","fa fa-remove");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n                ");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          var hooks = env.hooks, get = hooks.get, block = hooks.block, element = hooks.element;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          var element0 = dom.childAt(fragment, [1]);
+          var element1 = dom.childAt(element0, [5, 1]);
+          var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),0,1);
+          var morph1 = dom.createMorphAt(dom.childAt(element0, [3]),0,1);
+          block(env, morph0, context, "link-to", ["contacts.details", get(env, context, "contact")], {}, child0, null);
+          block(env, morph1, context, "link-to", ["contacts.edit", get(env, context, "contact")], {}, child1, null);
+          element(env, element1, context, "action", ["delete", get(env, context, "contact")], {});
+          return fragment;
+        }
+      };
+    }());
+    return {
+      isHTMLBars: true,
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("table");
+        dom.setAttribute(el1,"class","pure-table pure-table-striped contact-list");
+        var el2 = dom.createTextNode("\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("thead");
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("tr");
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        var el5 = dom.createTextNode("Name");
+        dom.appendChild(el4, el5);
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n            ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("th");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n        ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n\n    ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("tbody");
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("    ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, block = hooks.block, get = hooks.get;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        if (this.cachedFragment) { dom.repairClonedNode(fragment,[0]); }
+        var morph0 = dom.createMorphAt(fragment,0,1,contextualElement);
+        var morph1 = dom.createMorphAt(dom.childAt(fragment, [2, 3]),0,1);
+        block(env, morph0, context, "link-to", ["contacts.create"], {"class": "pure-button pure-button-primary"}, child0, null);
+        block(env, morph1, context, "each", [get(env, context, "controller")], {"keyword": "contact"}, child1, null);
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('frameground-ember/tests/app.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - .');
+  test('app.js should pass jshint', function() { 
+    ok(true, 'app.js should pass jshint.'); 
   });
+
+});
+define('frameground-ember/tests/controllers/contact.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers');
+  test('controllers/contact.js should pass jshint', function() { 
+    ok(true, 'controllers/contact.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/controllers/contacts.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers');
+  test('controllers/contacts.js should pass jshint', function() { 
+    ok(true, 'controllers/contacts.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/controllers/contacts/create.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers/contacts');
+  test('controllers/contacts/create.js should pass jshint', function() { 
+    ok(true, 'controllers/contacts/create.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/controllers/contacts/details.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers/contacts');
+  test('controllers/contacts/details.js should pass jshint', function() { 
+    ok(true, 'controllers/contacts/details.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/controllers/contacts/edit.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers/contacts');
+  test('controllers/contacts/edit.js should pass jshint', function() { 
+    ok(true, 'controllers/contacts/edit.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/controllers/contacts/index.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers/contacts');
+  test('controllers/contacts/index.js should pass jshint', function() { 
+    ok(true, 'controllers/contacts/index.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/helpers/resolver', ['exports', 'ember/resolver', 'frameground-ember/config/environment'], function (exports, Resolver, config) {
+
+  'use strict';
+
+  var resolver = Resolver['default'].create();
+
+  resolver.namespace = {
+    modulePrefix: config['default'].modulePrefix,
+    podModulePrefix: config['default'].podModulePrefix
+  };
+
+  exports['default'] = resolver;
+
+});
+define('frameground-ember/tests/helpers/resolver.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - helpers');
+  test('helpers/resolver.js should pass jshint', function() { 
+    ok(true, 'helpers/resolver.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/helpers/start-app', ['exports', 'ember', 'frameground-ember/app', 'frameground-ember/router', 'frameground-ember/config/environment'], function (exports, Ember, Application, Router, config) {
+
+  'use strict';
+
+
+
+  exports['default'] = startApp;
+  function startApp(attrs) {
+    var application;
+
+    var attributes = Ember['default'].merge({}, config['default'].APP);
+    attributes = Ember['default'].merge(attributes, attrs); // use defaults, but you can override;
+
+    Ember['default'].run(function () {
+      application = Application['default'].create(attributes);
+      application.setupForTesting();
+      application.injectTestHelpers();
+    });
+
+    return application;
+  }
+
+});
+define('frameground-ember/tests/helpers/start-app.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - helpers');
+  test('helpers/start-app.js should pass jshint', function() { 
+    ok(true, 'helpers/start-app.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/models/contact.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - models');
+  test('models/contact.js should pass jshint', function() { 
+    ok(true, 'models/contact.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/router.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - .');
+  test('router.js should pass jshint', function() { 
+    ok(true, 'router.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/routes/contact.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes');
+  test('routes/contact.js should pass jshint', function() { 
+    ok(true, 'routes/contact.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/routes/contacts.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes');
+  test('routes/contacts.js should pass jshint', function() { 
+    ok(true, 'routes/contacts.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/routes/contacts/create.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes/contacts');
+  test('routes/contacts/create.js should pass jshint', function() { 
+    ok(true, 'routes/contacts/create.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/routes/contacts/details.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes/contacts');
+  test('routes/contacts/details.js should pass jshint', function() { 
+    ok(true, 'routes/contacts/details.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/routes/contacts/edit.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes/contacts');
+  test('routes/contacts/edit.js should pass jshint', function() { 
+    ok(true, 'routes/contacts/edit.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/routes/index.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - routes');
+  test('routes/index.js should pass jshint', function() { 
+    ok(true, 'routes/index.js should pass jshint.'); 
+  });
+
+});
+define('frameground-ember/tests/test-helper', ['frameground-ember/tests/helpers/resolver', 'ember-qunit'], function (resolver, ember_qunit) {
+
+	'use strict';
+
+	ember_qunit.setResolver(resolver['default']);
+
+});
+define('frameground-ember/tests/test-helper.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - .');
+  test('test-helper.js should pass jshint', function() { 
+    ok(true, 'test-helper.js should pass jshint.'); 
+  });
+
+});
+/* jshint ignore:start */
+
+/* jshint ignore:end */
+
 /* jshint ignore:start */
 
 define('frameground-ember/config/environment', ['ember'], function(Ember) {
@@ -670,13 +1228,13 @@ catch(err) {
 
 /* jshint ignore:end */
 
-
 });
 
 if (runningTests) {
-  require('frameground-ember/tests/test-helper');
+  require("frameground-ember/tests/test-helper");
 } else {
-  require('frameground-ember/app')['default'].create({"LOG_ACTIVE_GENERATION":true,"LOG_VIEW_LOOKUPS":true});
+  require("frameground-ember/app")["default"].create({"name":"frameground-ember","version":"0.0.2.655aa493"});
 }
 
 /* jshint ignore:end */
+//# sourceMappingURL=frameground-ember.map
