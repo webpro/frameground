@@ -8,19 +8,20 @@
   },
   "main": "index.js",
   "dependencies": {
-    "director": "^1.2.5",
-    "superagent": "^0.21.0",
-    "vue": "^0.11.4"
+    "director": "^1.2.8",
+    "superagent": "^1.1.0",
+    "vue": "^0.11.5"
   },
   "devDependencies": {
-    "browserify": "^7.0.0",
-    "uglify-js": "^2.4.15",
-    "vueify": "^1.1.0",
-    "watchify": "^2.1.1"
+    "browserify": "^9.0.3",
+    "bundle-collapser": "^1.1.4",
+    "uglify-js": "^2.4.17",
+    "vueify": "^1.1.2",
+    "watchify": "^2.6.2"
   },
   "scripts": {
     "start": "watchify -t vueify -v -e src/index.js -o dist/bundle.js",
-    "build": "browserify -t vueify src/index.js | uglifyjs -c -m > dist/bundle.min.js"
+    "build": "browserify -t vueify -p bundle-collapser/plugin src/index.js | uglifyjs -c -m > dist/bundle.min.js"
   },
   "author": {
     "name": "Lars Kappert",

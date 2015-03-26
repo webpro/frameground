@@ -7,8 +7,8 @@
     "url": "https://github.com/webpro/frameground.git"
   },
   "devDependencies": {
-    "dyson": "^0.3.3",
-    "faker": "^2.1.0"
+    "dyson": "^0.4.0",
+    "faker": "^2.1.2"
   },
   "scripts": {
     "start": "dyson service",
